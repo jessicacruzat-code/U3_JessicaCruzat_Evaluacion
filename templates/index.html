@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Menú - TA_6</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <style>
+    /* opcional: asegura que los <button> hereden el estilo de .btn */
+    button.btn { cursor: pointer; }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <h1></h1>
+    <div class="btns">
+      <form action="{{ url_for('ejercicio1') }}" method="get">
+        <button type="submit" class="btn">Ejercicio 1</button>
+      </form>
+    </div>
+    <div class="btns">
+      <form action="{{ url_for('ejercicio2') }}" method="get">
+        <button type="submit" class="btn outline">Ejercicio 2</button>
+      </form>
+    </div>
+  </main>
+</body>
+</html>

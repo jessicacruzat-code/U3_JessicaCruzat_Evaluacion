@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Ejercicio 1</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <main class="container">
+    <h1>Ejercicio 1</h1>
+    <p>Ingrese 3 notas (10–70) y asistencia (0–100). Al enviar, se mostrará el promedio y si aprueba (≥40 y ≥75%).</p>
+
+    {% if error %}
+      <div class="alert">{{ error|safe }}</div>
+    {% endif %}
+
+    <form method="POST" class="card">
+      <label>Nota 1
+        <input type="number" name="nota1" min="10" max="70" required
+               value="{{ valores.nota1 if valores else '' }}">
+      </label>
+      <label>Nota 2
+        <input type="number" name="nota2" min="10" max="70" required
+               value="{{ valores.nota2 if valores else '' }}">
+      </label>
+      <label>Nota 3
+        <input type="number" name="nota3" min="10" max="70" required
+               value="{{ valores.nota3 if valores else '' }}">
+      </label>
+      <label>Asistencia (%)
+        <input type="number" name="asistencia" min="0" max="100" required
+               value="{{ valores.asistencia if valores else '' }}">
+      </label>
+
+      <button type="submit" class="btn">Calcular</button>
+      <a href="{{ url_for('index') }}" class="btn outline">Volver</a>
+    </form>
+  </main>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Ejercicio 2</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <main class="container">
+    <h1>Ejercicio 2</h1>
+    <p>Ingresa tres nombres. Se mostrará el nombre más largo y su cantidad de caracteres.</p>
+
+    {% if error %}
+      <div class="alert">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST" class="card">
+      <label>Nombre 1
+        <input type="text" name="nombre1" required value="{{ valores.nombre1 if valores else '' }}">
+      </label>
+      <label>Nombre 2
+        <input type="text" name="nombre2" required value="{{ valores.nombre2 if valores else '' }}">
+      </label>
+      <label>Nombre 3
+        <input type="text" name="nombre3" required value="{{ valores.nombre3 if valores else '' }}">
+      </label>
+
+      <div class="btns">
+        <button type="submit" class="btn">Calcular</button>
+        <a class="btn outline" href="{{ url_for('index') }}">Menú</a>
+      </div>
+    </form>
+  </main>
+</body>
+</html>
