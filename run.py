@@ -1,83 +1,56 @@
 from flask import Flask, render_template, request
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates', static_folder='static')
 
-@app.route("/")
+@app.route('/')
 def index():
-    # Menú con los 2 ejercicios (el 2 puede quedar como “próximamente”)
-    return render_template("index.html")
+    return render_template('index.html')
 
-# -------- Ejercicio 1 --------
-@app.route("/ejercicio1", methods=["GET", "POST"])
+# --- Ejercicio 1 ---
+@app.route('/ejercicio1', methods=['GET', 'POST'])
 def ejercicio1():
-    if request.method == "POST":
-        # 1) Tomar datos del formulario
+    error = None
+    valores = {}
+    resultado = None
+
+    if request.method == 'POST':
         try:
-            n1 = int(request.form.get("nota1", ""))
-            n2 = int(request.form.get("nota2", ""))
-            n3 = int(request.form.get("nota3", ""))
-            asistencia = int(request.form.get("asistencia", ""))
+            n1 = float(request.form.get('nota1', ''))
+            n2 = float(request.form.get('nota2', ''))
+            n3 = float(request.form.get('nota3', ''))
+            asistencia = float(request.form.get('asistencia', ''))
+
+            valores = {"nota1": n1, "nota2": n2, "nota3": n3, "asistencia": asistencia}
+
+            if not (10 <= n1 <= 70 and 10 <= n2 <= 70 and 10 <= n3 <= 70):
+                error = "Las notas deben estar entre 10 y 70."
+            elif not (0 <= asistencia <= 100):
+                error = "La asistencia debe estar entre 0 y 100."
+            else:
+                prom = (n1 + n2 + n3) / 3
+                estado = "Aprobado" if (prom >= 40 and asistencia >= 75) else "Reprobado"
+                resultado = {"promedio": round(prom, 2), "asistencia": asistencia, "estado": estado}
         except ValueError:
-            # Algún valor no era entero
-            return render_template(
-                "ejercicio1.html",
-                error="Todos los campos deben ser números enteros."
-            )
+            error = "Debes ingresar números válidos."
 
-        # 2) Validaciones de rango
-        errores = []
-        for i, n in enumerate([n1, n2, n3], start=1):
-            if not (10 <= n <= 70):
-                errores.append(f"La nota {i} debe estar entre 10 y 70.")
-        if not (0 <= asistencia <= 100):
-            errores.append("La asistencia debe estar entre 0 y 100.")
-        if errores:
-            return render_template("ejercicio1.html", error="<br>".join(errores),
-                                   valores={"nota1": n1, "nota2": n2, "nota3": n3, "asistencia": asistencia})
+    return render_template("ejercicio1.html", error=error, valores=valores, resultado=resultado)
 
-        # 3) Cálculo
-        promedio = round((n1 + n2 + n3) / 3, 2)
-        aprobado = (promedio >= 40) and (asistencia >= 75)
-        estado = "APROBADO" if aprobado else "REPROBADO"
-
-        # 4) Mostrar resultado
-        return render_template(
-            "ejercicio1_resultado.html",
-            n1=n1, n2=n2, n3=n3, asistencia=asistencia,
-            promedio=promedio, estado=estado
-        )
-
-    # GET: mostrar formulario
-    return render_template("ejercicio1.html")
-
-# (Opcional) placeholder para el Ejercicio 2
-@app.route("/ejercicio2", methods=["GET", "POST"])
+# --- Ejercicio 2 ---
+@app.route('/ejercicio2', methods=['GET', 'POST'])
 def ejercicio2():
-    if request.method == "POST":
-        n1 = (request.form.get("nombre1") or "").strip()
-        n2 = (request.form.get("nombre2") or "").strip()
-        n3 = (request.form.get("nombre3") or "").strip()
+    resultado = None
+    if request.method == 'POST':
+        nombres = [
+            request.form.get('nombre1', ''),
+            request.form.get('nombre2', ''),
+            request.form.get('nombre3', '')
+        ]
+        if all(nombres):
+            nombre_largo = max(nombres, key=len)
+            resultado = f"El nombre más largo es '{nombre_largo}' con {len(nombre_largo)} caracteres."
+    return render_template("ejercicio2.html", resultado=resultado)
 
-        if not (n1 and n2 and n3):
-            return render_template(
-                "ejercicio2.html",
-                error="Completa los tres nombres.",
-                valores={"nombre1": n1, "nombre2": n2, "nombre3": n3}
-            )
-
-        nombres = [n1, n2, n3]
-        longitudes = [len(x) for x in nombres]
-        maxlen = max(longitudes)
-        mas_largos = [n for n in nombres if len(n) == maxlen]   # maneja empates
-
-        return render_template(
-            "ejercicio2_resultado.html",
-            nombres=nombres, mas_largos=mas_largos, maxlen=maxlen
-        )
-
-    # GET
-    return render_template("ejercicio2.html")
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)
+
+

@@ -2,34 +2,34 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>Ejercicio 2</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <title>Ejercicio2</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilosEjercicios.css') }}">
 </head>
 <body>
   <main class="container">
-    <h1>Ejercicio 2</h1>
-    <p>Ingresa tres nombres. Se mostrará el nombre más largo y su cantidad de caracteres.</p>
-
-    {% if error %}
-      <div class="alert">{{ error }}</div>
-    {% endif %}
-
     <form method="POST" class="card">
-      <label>Nombre 1
-        <input type="text" name="nombre1" required value="{{ valores.nombre1 if valores else '' }}">
-      </label>
-      <label>Nombre 2
-        <input type="text" name="nombre2" required value="{{ valores.nombre2 if valores else '' }}">
-      </label>
-      <label>Nombre 3
-        <input type="text" name="nombre3" required value="{{ valores.nombre3 if valores else '' }}">
-      </label>
+        <h1>Formulario Nombre</h1>
+        <p>Ingrese 3 nombres diferentes.</p>
+        <p>Se mostrará cuál es el más largo y su cantidad de caracteres.</p>
+      <label>Nombre 1:<br/>
+        <input type="text" name="nombre1" required>
+      </label><br/>
+      <label>Nombre 2:<br/>
+        <input type="text" name="nombre2" required>
+      </label><br/>
+      <label>Nombre 3:<br/>
+        <input type="text" name="nombre3" required>
+      </label><br/><br/>
+      <div class="botones">
+          <button type="submit" class="btn">Enviar</button>
+          <a href="{{ url_for('index') }}" class="btn">Volver</a>
+      </div> </form>
 
-      <div class="btns">
-        <button type="submit" class="btn">Calcular</button>
-        <a class="btn outline" href="{{ url_for('index') }}">Menú</a>
+    {% if resultado %}
+      <div class="card success" style="margin-top:16px;">
+        <p>{{ resultado }}</p>
       </div>
-    </form>
+    {% endif %}
   </main>
 </body>
 </html>

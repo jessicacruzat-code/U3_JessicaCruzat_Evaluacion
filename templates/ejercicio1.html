@@ -2,39 +2,59 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>Ejercicio 1</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <title>Ejercicio1</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilosEjercicios.css') }}">
+
 </head>
 <body>
   <main class="container">
-    <h1>Ejercicio 1</h1>
-    <p>Ingrese 3 notas (10–70) y asistencia (0–100). Al enviar, se mostrará el promedio y si aprueba (≥40 y ≥75%).</p>
-
+    {# Bloque de error: SE ABRE Y SE CIERRA #}
     {% if error %}
       <div class="alert">{{ error|safe }}</div>
     {% endif %}
 
     <form method="POST" class="card">
-      <label>Nota 1
+        <h1>Formulario Nota</h1>
+        <p>Ingrese 3 notas (10–70) y asistencia (0–100). </p>
+        <p>Al enviar, se mostrará el promedio y si aprueba (≥40 y ≥75%).</p>
+      <label>Nota 1:<br/>
         <input type="number" name="nota1" min="10" max="70" required
                value="{{ valores.nota1 if valores else '' }}">
       </label>
-      <label>Nota 2
+      <br/>
+
+      <label>Nota 2:<br/>
         <input type="number" name="nota2" min="10" max="70" required
                value="{{ valores.nota2 if valores else '' }}">
       </label>
-      <label>Nota 3
+      <br/>
+
+      <label>Nota 3:<br/>
         <input type="number" name="nota3" min="10" max="70" required
                value="{{ valores.nota3 if valores else '' }}">
       </label>
-      <label>Asistencia (%)
+      <br/>
+
+      <label>Asistencia (%):<br/>
         <input type="number" name="asistencia" min="0" max="100" required
                value="{{ valores.asistencia if valores else '' }}">
       </label>
+      <br/><br/>
 
-      <button type="submit" class="btn">Calcular</button>
-      <a href="{{ url_for('index') }}" class="btn outline">Volver</a>
+        <div class="botones">
+          <button type="submit" class="btn">Calcular</button>
+          <a href="{{ url_for('index') }}" class="btn">Volver</a>
+        </div> </form>
     </form>
+
+    {# Bloque de resultado: SE ABRE Y SE CIERRA #}
+    {% if resultado %}
+      <div class="card success" style="margin-top:16px;">
+        <p><strong>Promedio:</strong> {{ resultado.promedio }}</p>
+        <p><strong>Asistencia:</strong> {{ resultado.asistencia }}%</p>
+        <p><strong>Estado:</strong> {{ resultado.estado }}</p>
+      </div>
+    {% endif %}
   </main>
 </body>
 </html>

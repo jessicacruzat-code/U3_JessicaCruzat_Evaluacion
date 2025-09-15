@@ -1,0 +1,88 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    color: #333;
+}
+/* Contenedor general centrado */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+/* Tarjeta del formulario */
+.card {
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    width: 350px;
+}
+/* Título */
+.card h1 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+/* Labels y inputs */
+/* Etiquetas más compactas */
+label {
+  display: block;
+  font-weight: 600;
+  margin: 6px 0 4px;   /* antes: 10px 0 6px */
+  color: #333;
+}
+/* Campos de texto compactos */
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 6px 8px;    /* más pequeño */
+  margin-bottom: 8px;   /* antes: 12-15px */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+/* Botones */
+/* Contenedor de botones en fila */
+.botones {
+  display: flex;
+  justify-content: center;   /* centra los botones */
+  gap: 12px;                 /* espacio entre ellos */
+  margin-top: 15px;
+}
+/* Botones iguales */
+.btn {
+  flex: 1;                   /* ambos ocupan el mismo ancho */
+  max-width: 200px;          /* ancho máximo fijo */
+  background: #4c6ef5;       /* azul */
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-align: center;
+  transition: 0.2s;
+}
+.btn:hover {
+  background: #364fc7;       /* azul más oscuro */
+}
+/* Mensajes */
+.alert {
+    background: #ffe8e8;
+    color: #992c2c;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+.success {
+    background: #e8ffe8;
+    color: #2c992c;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 15px;
+}
